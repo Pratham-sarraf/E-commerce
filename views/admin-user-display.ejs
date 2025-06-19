@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin User Products</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Righteous&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #6c5ce7;
+      --secondary: #00cec9;
+      --accent: #fd79a8;
+      --dark: #2d3436;
+      --light: #f5f6fa;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      min-height: 100vh;
+      padding: 2rem;
+      color: var(--dark);
+    }
+
+    .admin-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 2rem;
+    }
+
+    h1 {
+      color: white;
+      font-size: 2.5rem;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.2);
+    }
+
+    h1::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(to right, var(--accent), var(--secondary));
+      margin: 0.5rem 0 0;
+      border-radius: 2px;
+    }
+
+    .user-info {
+      background: rgba(255, 255, 255, 0.95);
+      padding: 1.5rem;
+      border-radius: 12px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      margin-bottom: 2rem;
+    }
+
+    /* Styling for the "User Details" heading */
+    .user-info h2 {
+      font-family: 'Righteous', cursive; /* Applied Righteous font */
+      font-size: 1.8rem; /* Slightly larger */
+      color: var(--primary);
+      margin-bottom: 1rem; /* More space below the heading */
+      text-align: center;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    /* Styling for the paragraph text */
+    .user-info p {
+      color: var(--dark);
+      margin-bottom: 0.5rem; /* Increased spacing between lines */
+      font-size: 1.1rem; /* Slightly larger font size for readability */
+      display: flex; /* Use flexbox for better alignment of strong and span */
+      justify-content: center; /* Center align the content */
+      gap: 0.5rem; /* Space between the strong tag and the value */
+    }
+
+    /* Styling for the bold labels (User_name, Total Products) */
+    .user-info p strong {
+      font-weight: 600; /* Bolder for labels */
+      color: var(--dark); /* Keep label color dark */
+    }
+
+    /* Styling for the dynamic values (username, products.length) */
+    .user-info p span {
+      font-weight: 700; /* Even bolder for values */
+      color: var(--accent); /* Highlight values with accent color */
+      text-shadow: 0 0 5px rgba(253, 121, 168, 0.2); /* Subtle glow effect */
+    }
+
+    .product-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .product-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 380px;
+      position: relative;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 160px;
+      object-fit: contain;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      background-color: #f1f1f1;
+      padding: 8px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    }
+
+    .product-name {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--dark);
+      font-size: 1.1rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .product-price {
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .product-quantity {
+      position: absolute;
+      top: 15px;
+      right: 15px;
+      background: var(--accent);
+      color: white;
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    }
+
+    .product-description {
+      color: var(--dark);
+      font-size: 0.9rem;
+      margin-bottom: 1rem;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .no-products {
+      text-align: center;
+      color: white;
+      font-size: 1.2rem;
+      grid-column: 1/-1;
+      padding: 2rem;
+      background: rgba(255,255,255,0.2);
+      border-radius: 12px;
+      backdrop-filter: blur(5px);
+    }
+
+    .floating-bg {
+      position: fixed;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: rgba(253, 121, 168, 0.1);
+      filter: blur(60px);
+      z-index: -1;
+    }
+
+    .bg-1 {
+      top: 20%;
+      left: 10%;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .bg-2 {
+      bottom: 15%;
+      right: 10%;
+      animation: float 10s ease-in-out infinite reverse;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+      100% { transform: translateY(0) rotate(0deg); }
+    }
+
+    .back-button {
+      display: inline-block;
+      padding: 0.6rem 1.2rem;
+      background-color: var(--accent);
+      color: white;
+      text-decoration: none;
+      border-radius: 6px;
+      margin-top: 1rem;
+      transition: all 0.3s ease;
+    }
+
+    .back-button:hover {
+      background-color: var(--primary);
+      transform: translateY(-2px);
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-bg bg-1"></div>
+  <div class="floating-bg bg-2"></div>
+
+  <div class="admin-header">
+    <div>
+      <h1><%= user.username.toUpperCase() %>'s Products</h1>
+    </div>
+    <a href="/admin/users" class="back-button">
+      <i class="fas fa-arrow-left"></i> Back to Dashboard
+    </a>
+  </div>
+
+  <div class="user-info">
+    <h2>User Details</h2>
+    <p><strong>User_name:</strong> <span><%= user.username %></span></p>
+    <p><strong>Total Products:</strong> <span><%= products.length %></span></p>
+<% 
+  let totalPrice = 0;
+  products.forEach(p => {
+    totalPrice += p.price * p.quantity; // quantity multiply optional hai
+  }); 
+%>
+
+<p><strong>Total Purchase:</strong> 
+<span>₹<%= totalPrice.toLocaleString('en-IN') %></span>
+</p>
+
+  </div>
+
+  <div class="product-list">
+<% if (products && products.length > 0) { %>
+  <% products.forEach(product => { %>
+    <div class="product-card">
+      <div class="product-quantity" title="Quantity"><%= product.quantity %></div>
+      <img src="<%= product.url %>" alt="<%= product.name %>" />
+      <div class="product-name" title="<%= product.name %>"><%= product.name %></div>
+      <% if (product.description) { %>
+        <div class="product-description"><%= product.description %></div>
+      <% } %>
+      
+      <div class="product-price">₹<%= Number(product.price).toLocaleString('en-IN') %></div>
+    </div>
+  <% }) %>
+    <% } else { %>
+      <div class="no-products">
+        <p>No products found for this user. <i class="fas fa-box-open"></i></p>
+      </div>
+    <% } %>
+  </div>
+</body>
+</html>

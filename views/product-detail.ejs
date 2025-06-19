@@ -1,0 +1,517 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title><%= product.name %> - Product Detail</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #6c5ce7;
+      --secondary: #00cec9;
+      --accent: #fd79a8;
+      --dark: #2d3436;
+      --light: #f5f6fa;
+      --price-color: #B12704;
+      --star-color: #FFA41C;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      min-height: 100vh;
+      padding: 2rem;
+      color: var(--dark);
+    }
+
+    .product-container {
+      max-width: 1000px;
+      margin: 2rem auto;
+      margin-bottom: 0px;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 2rem;
+    }
+
+    .product-image-container {
+      padding: 2rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: white;
+    }
+
+    .product-image {
+      width: 420px;
+      height: 500px;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+      transition: transform 0.3s ease;
+    }
+
+    .product-image:hover {
+      transform: scale(1.05);
+    }
+
+    .product-info {
+      padding: 2rem 2rem 2rem 0;
+    }
+
+    .product-name {
+      font-size: 1.8rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+      color: var(--dark);
+      line-height: 1.3;
+    }
+
+    .product-rating {
+      display: flex;
+      align-items: center;
+      margin-bottom: 1.5rem;
+    }
+
+    .stars {
+      color: var(--star-color);
+      font-size: 1.2rem;
+      margin-right: 0.5rem;
+    }
+
+    .rating-count {
+      color: #007185;
+      font-size: 1.2rem;
+      position: relative;
+      left:160px
+    }
+
+    .price-container {
+      margin: 1.5rem 0;
+    }
+
+    .price {
+      font-size: 1.8rem;
+      font-weight: 700;
+      color: var(--price-color);
+    }
+
+    .price-symbol {
+      font-size: 1.2rem;
+      vertical-align: super;
+    }
+
+    .price-decimal {
+      font-size: 1.2rem;
+    }
+
+    .shipping-info {
+      color: #565959;
+      font-size: 0.9rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .highlight {
+      color: var(--primary);
+      font-weight: 500;
+    }
+
+    .about-item {
+      margin: 2rem 0;
+    }
+
+    .about-title {
+      font-size: 1.2rem;
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+    }
+
+    .about-list {
+      list-style-position: inside;
+      padding-left: 0.5rem;
+    }
+
+    .about-list li {
+      margin-bottom: 0.5rem;
+      line-height: 1.5;
+    }
+
+    .action-buttons {
+      display: flex;
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+
+    .btn {
+      padding: 0.8rem 1.5rem;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      border: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary {
+      background: linear-gradient(to bottom, #f7dfa5, #f0c14b);
+      color: #111;
+      border: 1px solid #a88734;
+    }
+
+    .btn-primary:hover {
+      background: linear-gradient(to bottom, #f5d78e, #eeb933);
+    }
+
+    .btn-secondary {
+      background: linear-gradient(to bottom, #f7f8fa, #e7e9ec);
+      color: #111;
+      border: 1px solid #adb1b8;
+    }
+
+    .btn-secondary:hover {
+      background: linear-gradient(to bottom, #e7eaf0, #d9dce1);
+    }
+
+    .back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 2rem;
+      text-decoration: none;
+      color: var(--primary);
+      font-weight: 500;
+      transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+      color: var(--accent);
+      text-decoration: underline;
+    }
+
+    .floating-bg {
+      position: fixed;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: rgba(253, 121, 168, 0.1);
+      filter: blur(60px);
+      z-index: -1;
+    }
+
+    .bg-1 {
+      top: 20%;
+      left: 10%;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .bg-2 {
+      bottom: 15%;
+      right: 10%;
+      animation: float 10s ease-in-out infinite reverse;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+      100% { transform: translateY(0) rotate(0deg); }
+    }
+
+    .comment-section {
+      margin-top: 2rem;
+    }
+
+    .comment-section textarea {
+      width: 100%;
+      padding: 0.8rem;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-family: 'Poppins';
+      resize: vertical;
+      margin-bottom: 1rem;
+    }
+
+    .rating-stars {
+      display: flex;
+      gap: 5px;
+      font-size: 1.5rem;
+      color: #ccc;
+      cursor: pointer;
+    }
+
+    .rating-stars .fa-star.selected {
+      color: var(--star-color);
+    }
+
+    .submit-comment-btn {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 0.7rem 1.4rem;
+      border-radius: 8px;
+      font-weight: 500;
+      cursor: pointer;
+    }
+    .average-rating{
+          display: inline-block;  /* Size content ke according ho jaata hai */
+  padding: 2px 6px;        /* Thoda padding for neatness */
+  background-color: #f4f4f4; /* Optional: halki background for highlight */
+  border-radius: 4px;       /* Rounded look */
+  font-weight: bold;        /* Highlighted look */
+    }
+    .submit-comment-btn:hover {
+      background-color: var(--accent);
+    }
+
+      .review-section {
+      margin-top: 0rem;
+      padding: 2rem;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+    }
+    
+    .review-section h2 {
+      font-size: 1.5rem;
+      margin-bottom: 1.5rem;
+      color: #2d3436;
+      padding-bottom: 0.5rem;
+      border-bottom: 2px solid #00cec9;
+      display: inline-block;
+    }
+    
+    .review-box {
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      background: #f8f9fa;
+      border-radius: 8px;
+      border-left: 4px solid #6c5ce7;
+      transition: all 0.3s ease;
+    }
+    
+    .review-box:hover {
+      transform: translateX(5px);
+      box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+    }
+    
+    .review-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.5rem;
+    }
+    
+    .review-rating {
+      color: #FFA41C;
+      font-weight: 600;
+    }
+    
+    .review-date {
+      color: #636e72;
+      font-size: 0.85rem;
+    }
+    
+    .review-content {
+      color: #2d3436;
+      line-height: 1.6;
+    }
+    .review-container {
+  max-width: 1000px;
+  margin: 10px auto;
+}
+
+    
+    .no-reviews {
+      text-align: center;
+      padding: 2rem;
+      color: #636e72;
+      font-style: italic;
+    }
+    
+  </style>
+</head>
+<body>
+  <div class="floating-bg bg-1"></div>
+  <div class="floating-bg bg-2"></div>
+
+  <div class="product-container">
+    <div class="product-image-container">
+      <img src="<%= product.url %>" alt="<%= product.name %>" class="product-image" />
+    </div>
+
+    <div class="product-info">
+      <h1 class="product-name"><%= product.name %></h1>
+
+<% 
+  let totalRating = 0;
+  reviews.forEach(r => totalRating += r.rating);
+  let avgRating = reviews.length > 0 ? (totalRating / reviews.length) : 0;
+
+  let fullStars = Math.floor(avgRating); // ⭐ full stars
+  let hasHalfStar = avgRating - fullStars >= 0.5; // ⯪ half star if >= 0.5
+  let emptyStars = 5 - fullStars - (hasHalfStar ? 1 : 0); // ☆ empty stars
+%>
+
+<div class="product-rating">
+  <div class="stars">
+    <% for (let i = 0; i < fullStars; i++) { %>
+      <i class="fas fa-star"></i>
+    <% } %>
+
+    <% if (hasHalfStar) { %>
+      <i class="fas fa-star-half-alt"></i>
+    <% } %>
+
+    <% for (let i = 0; i < emptyStars; i++) { %>
+      <i class="far fa-star"></i>
+    <% } %>
+  </div>
+
+  <div class="average-rating"> <%= avgRating.toFixed(1) %> / 5
+  </div>
+
+  <span class="rating-count"><%= reviews.length %> ratings</span>
+</div>
+
+
+      <hr style="border: none; border-top: 1px solid #e7e7e7; margin: 1rem 0;">
+
+      <div class="price-container">
+        <span class="price">
+          <span class="price-symbol">₹</span><%= product.price.toFixed(2).split('.')[0] %><span class="price-decimal">.<%= product.price.toFixed(2).split('.')[1] %></span>
+        </span>
+      </div>
+
+      <div class="shipping-info">
+        FREE delivery <span class="highlight">Tomorrow</span> by 10 PM.
+        <br>Order within <span class="highlight">10 hrs 24 mins</span>
+      </div>
+
+      <div class="about-item">
+        <h3 class="about-title">About this item</h3>
+        <ul class="about-list">
+          <li>Premium quality materials for long-lasting durability</li>
+          <li>Designed for maximum comfort and performance</li>
+          <li>Includes 1-year manufacturer warranty</li>
+          <li>Eco-friendly packaging</li>
+          <li>Customer favorite with 4.5+ star average rating</li>
+        </ul>
+      </div>
+      
+      <form action="/products/<%= product._id %>/add-to-cart" method="POST" style="display:inline;">
+        <div class="action-buttons">
+          <button type="submit" class="btn btn-primary">
+            <i class="fas fa-shopping-cart"></i> Add to Cart
+          </button>
+          <button type="button" class="btn btn-secondary">
+            <i class="fas fa-bolt"></i> Buy Now
+          </button>
+        </div>
+      </form>
+
+      <!-- Rating + Comment Form -->
+      <div class="comment-section">
+<form action="/products/<%= product._id %>/review" method="POST">
+  <div class="rating-stars" id="ratingStars">
+    <% for(let i = 1; i <= 5; i++) { %>
+      <i class="fas fa-star" data-value="<%= i %>"></i>
+    <% } %>
+  </div>
+
+  <!-- Hidden field for selected star rating -->
+  <input type="hidden" name="rating" id="ratingValue" value="1" />
+
+  <!-- Textarea for comment (name changed to 'review' to match backend) -->
+  <textarea name="review" rows="4" placeholder="Write your comment here..." required></textarea>
+
+  <button type="submit" class="submit-comment-btn">Submit Review</button>
+</form>
+      </div>
+
+
+      <a href="/products" class="back-link">
+        <i class="fas fa-arrow-left"></i> Back to Products
+      </a>
+    </div>
+  </div>
+    <div class="review-container">
+
+    
+  <div class="review-section">
+    <h2>Customer Reviews</h2>
+    <% if (reviews.length > 0) { %>
+      <% reviews.forEach(review => { %>
+<h4>User: <%= review.user.username %></h4>
+
+
+   
+
+        <div class="review-box">
+          <div class="review-header">
+            <div class="review-rating">
+              <% for(let i = 1; i <= 5; i++) { %>
+                <% if(i <= review.rating) { %>
+                  <i class="fas fa-star"></i>
+                <% } else { %>
+                  <i class="far fa-star"></i>
+                <% } %>
+              <% } %>
+              (<%= review.rating %>/5)
+            </div>
+            <div class="review-date">
+              <%= new Date(review.createdAt).toLocaleDateString('en-US', { 
+                year: 'numeric', 
+                month: 'short', 
+                day: 'numeric' 
+              }) %>
+            </div>
+          </div>
+          <div class="review-content">
+            <%= review.review %>
+          </div>
+        </div>
+      <% }) %>
+    <% } else { %>
+      <div class="no-reviews">
+        <i class="far fa-comment-dots" style="font-size: 2rem; margin-bottom: 1rem;"></i>
+        <p>No reviews yet. Be the first to review!</p>
+      </div>
+    <% } %>
+  </div>
+
+
+
+    </div>
+
+
+
+
+
+  <script>
+    const stars = document.querySelectorAll('#ratingStars .fa-star');
+    const ratingValue = document.getElementById('ratingValue');
+
+    stars.forEach((star, index) => {
+      star.addEventListener('click', () => {
+        ratingValue.value = index + 1;
+        stars.forEach((s, i) => {
+          s.classList.toggle('selected', i <= index);
+        });
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Error</title>
+  <style>
+    body {
+      background-color: #f8d7da;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    .error-box {
+      background-color: #fff;
+      padding: 40px 50px;
+      border-radius: 12px;
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      border-top: 8px solid #dc3545;
+    }
+
+    .error-box h1 {
+      color: #dc3545;
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .error-box p {
+      color: #555;
+      font-size: 18px;
+      margin-bottom: 25px;
+    }
+
+    .back-btn {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #dc3545;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+      transition: background-color 0.3s ease;
+    }
+
+    .back-btn:hover {
+      background-color: #b02a37;
+    }
+  </style>
+</head>
+<body>
+  <div class="error-box">
+    <h1>Oops! Something went wrong.</h1>
+    <p><%= errorMessage || "An unexpected error occurred." %></p>
+    <a class="back-btn" href="/">Go Back Home</a>
+  </div>
+</body>
+</html>

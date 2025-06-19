@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Admin - Contact Submissions</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Righteous&family=Raleway:wght@400;600&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    /* --- CSS Variables: Unified set based on your provided styles --- */
+    :root {
+      --primary: #6c5ce7;
+      --primary-light: rgba(108, 92, 231, 0.2);
+      /* Used for lighter glass backgrounds */
+      --secondary: #00cec9;
+      --accent: #fd79a8;
+      --dark: #2d3436;
+      /* Kept for potential future use */
+      --light: #f5f6fa;
+      /* Kept for potential future use */
+      --success: #00b894;
+      /* For success-related elements */
+      --danger: #d63031;
+      /* For danger-related elements */
+      --warning: #fdcb6e;
+      /* For warning-related elements */
+      --gray: #dfe6e9;
+      /* For general borders/separators */
+
+      /* --- Glassmorphism specific variables --- */
+      --glass-bg-light: rgba(255, 255, 255, 0.1);
+      /* Lighter transparency for main glass elements */
+      --glass-bg-card: rgba(255, 255, 255, 0.15);
+      /* Slightly more opaque for cards */
+      --glass-border: 1px solid rgba(255, 255, 255, 0.2);
+      /* General glass border */
+      --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+      /* General glass shadow */
+      --card-hover-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+      /* Stronger shadow on card hover */
+    }
+
+    /* --- Universal Box-Sizing --- */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* --- HTML and Body Styles: Adjusted for fixed background --- */
+    html {
+      /* Apply the gradient to the html element to keep it fixed */
+      background-color: #6c5ce7;
+      min-height: 100%;
+      /* Ensure html takes full height */
+    }
+
+    body {
+      font-family: 'Montserrat', sans-serif;
+      /* Applied Montserrat for general body text */
+      color: white;
+      /* Default text color for the page */
+      min-height: 100vh;
+      /* Ensure body takes at least viewport height */
+      padding: 2rem;
+      /* Keep existing padding */
+      line-height: 1.6;
+      /* Keep existing line height */
+      overflow-x: hidden;
+      /* Prevent horizontal scroll from floating elements */
+      position: relative;
+      /* For floating elements context */
+    }
+
+    /* --- Floating Background Elements: Already fixed, will remain static --- */
+    .floating-bg {
+      position: fixed;
+      /* Stays in place relative to viewport */
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: rgba(253, 121, 168, 0.1);
+      /* Using accent color with transparency */
+      filter: blur(60px);
+      /* Soft blur effect */
+      z-index: -1;
+      /* Keep it behind main content */
+    }
+
+    .bg-1 {
+      top: 20%;
+      left: 10%;
+      animation: float 8s ease-in-out infinite;
+      /* Animation for floating effect */
+    }
+
+    .bg-2 {
+      bottom: 15%;
+      right: 10%;
+      animation: float 10s ease-in-out infinite reverse;
+      /* Reversed animation for variety */
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-20px) rotate(5deg);
+      }
+
+      100% {
+        transform: translateY(0) rotate(0deg);
+      }
+    }
+
+    /* --- Page Title (h1) --- */
+    h1 {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      color: white;
+      font-size: 2.8rem;
+      font-family: 'Righteous', cursive;
+      /* Keeping Righteous for the main title */
+      text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+      letter-spacing: 1px;
+    }
+
+    /* --- Card Styles: Blended from your previous and "home page" styles --- */
+    .card {
+      background: var(--glass-bg-card);
+      padding: 1.5rem 2rem;
+      margin: 1.5rem auto;
+      /* ✅ Center align */
+      max-width: 700px;
+      /* ✅ Width reduced */
+      width: 90%;
+      /* ✅ Mobile responsive */
+      border-left: 6px solid var(--accent);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      border-radius: 15px;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+    }
+
+
+    .card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .card h3 {
+      margin-bottom: 0.4rem;
+      color: white;
+      font-size: 1.4rem;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    .card .email {
+      font-family: 'Raleway', sans-serif;
+      /* Applied Raleway for email */
+      font-size: 0.95rem;
+      color: rgba(255, 255, 255, 0.8);
+      margin-bottom: 1rem;
+      word-wrap: break-word;
+    }
+
+    .card .subject {
+      font-family: 'Raleway', sans-serif;
+      /* Applied Raleway for subject */
+      font-weight: 600;
+      color: black;
+      margin-top: 1rem;
+      margin-bottom: 0.8rem;
+      font-size: 1.05rem;
+    }
+
+    .card .message {
+      font-family: 'Montserrat', sans-serif;
+      /* Applied Montserrat for message */
+      margin: 1rem 0;
+      color: rgba(255, 255, 255, 0.9);
+      white-space: pre-wrap;
+      line-height: 1.7;
+    }
+
+    .card small {
+      font-family: 'Montserrat', sans-serif;
+      /* Applied Montserrat for date */
+      color: rgba(255, 255, 255, 0.6);
+      font-size: 0.85rem;
+      display: block;
+      text-align: right;
+      padding-top: 0.8rem;
+      border-top: 1px dashed rgba(255, 255, 255, 0.3);
+      margin-top: 1rem;
+    }
+
+    /* --- No Submissions State --- */
+    .no-submissions {
+      text-align: center;
+      padding: 3rem;
+      background: var(--glass-bg-light);
+      border-radius: 15px;
+      box-shadow: var(--glass-shadow);
+      color: white;
+      font-size: 1.1rem;
+      backdrop-filter: blur(8px);
+      border: var(--glass-border);
+    }
+
+    .no-submissions p {
+      font-family: 'Montserrat', sans-serif;
+      /* Applied Montserrat for empty state message */
+      color: rgba(255, 255, 255, 0.8);
+    }
+
+    .btn-delete {
+      background-color: #e74c3c;
+      color: white;
+      border: none;
+      padding: 0.5rem 1rem;
+      font-size: 0.9rem;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .btn-delete:hover {
+      background-color: #c0392b;
+    }
+
+    .btn-delete i {
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="floating-bg bg-1"></div>
+  <div class="floating-bg bg-2"></div>
+
+  <h1>Contact Submissions</h1>
+
+  <% if (contacts && contacts.length > 0) { %>
+    <% contacts.forEach(contact => { %>
+      <div class="card" id="contact-<%= contact._id %>">
+        <h3><%= contact.name %></h3>
+        <div class="email"><%= contact.email %></div>
+        <div class="subject">Subject: <%= contact.subject.toUpperCase() %></div>
+        <p class="message"><%= contact.message %></p>
+        <small>Submitted on: <%= new Date(contact.createdAt).toLocaleString() %></small>
+
+        <!-- Anchor with button inside -->
+        <a href="/admin/contact-us/delete/<%= contact._id %>" class="delete-link">
+          <button class="btn-delete" data-id="<%= contact._id %>">
+            <i class="fas fa-trash-alt"></i> Delete
+          </button>
+        </a>
+      </div>
+    <% }) %>
+  <% } else { %>
+    <div class="no-submissions">
+      <p>No contact submissions found.</p>
+    </div>
+  <% } %>
+
+  <!-- JavaScript to handle delete -->
+<script>
+  document.querySelectorAll(".delete-link").forEach(anchor => {
+    anchor.addEventListener("click", async function (e) {
+      e.preventDefault(); // Anchor ka default kaam (navigate) rokna
+
+      const href = this.getAttribute("href"); // e.g. "/admin/contact-us/delete/6659e424eeb7a73e6e88ec16"
+      const parts = href.split("/");          // ["", "admin", "contact-us", "delete", "6659e424eeb7a73e6e88ec16"]
+      const contactId = parts[parts.length - 1]; // "6659e424eeb7a73e6e88ec16"
+
+      const confirmed = confirm("Are you sure you want to delete this contact?");
+      if (!confirmed) return;
+
+      try {
+        const response = await fetch(`/admin/contact-us/${contactId}`, {
+          method: "DELETE"
+        });
+
+        if (response.ok) {
+         window.location.href = "/admin/contact-us";
+        } else {
+          alert("Failed to delete.");
+        }
+      } catch (err) {
+        console.error(err);
+        alert("Something went wrong!");
+      }
+    });
+  });
+</script>
+
+
+</body>
+
+
+</html>

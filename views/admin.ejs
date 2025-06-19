@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Funky Admin Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500&family=Poppins:wght@300;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #6c5ce7, #00b894);
+      color: #fff;
+    }
+
+    .header {
+      padding: 1rem 2rem;
+      background: rgba(0,0,0,0.3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .header h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 2rem;
+      color: #fd79a8;
+    }
+
+    .header nav a {
+      color: #fff;
+      margin-left: 1rem;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .container {
+      display: flex;
+    }
+
+    .sidebar {
+      width: 220px;
+      background: rgba(0,0,0,0.3);
+      padding: 2rem 1rem;
+      min-height: 100vh;
+      backdrop-filter: blur(6px);
+    }
+
+    .sidebar h3 {
+      color: #81ecec;
+      margin-bottom: 1rem;
+    }
+
+    .sidebar a {
+      display: block;
+      color: #fff;
+      padding: 0.6rem 1rem;
+      text-decoration: none;
+      margin-bottom: 0.6rem;
+      border-radius: 8px;
+      transition: 0.3s;
+    }
+
+    .sidebar a:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .main {
+      flex: 1;
+      padding: 2rem;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.1);
+      padding: 1.5rem;
+      border-radius: 15px;
+      text-align: center;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      transition: 0.3s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+      background: rgba(255,255,255,0.15);
+    }
+
+    .card h2 {
+      font-size: 2rem;
+      margin: 0.5rem 0;
+    }
+
+    .card p {
+      color: #dfe6e9;
+    }
+  </style>
+</head>
+<body>
+
+  <header class="header">
+    <h1>Funky Admin 👑</h1>
+    <nav>
+      <a href="/admin/add-product"><i class="fas fa-plus-circle"></i> Add Product</a>
+      <a href="/logout"><i class="fas fa-sign-out-alt"></i> Logout</a>
+    </nav>
+  </header>
+
+  <div class="container">
+    <aside class="sidebar">
+      <h3>Navigation</h3>
+      <a href="/"><i class="fas fa-tachometer-alt"></i> Home</a>
+      <a href="/products"><i class="fas fa-box"></i> Products</a>
+      <a href="/admin/users"><i class="fas fa-users"></i> Users</a>
+      <a href="/admin/contact-us"><i class="fas fa-receipt"></i> Suggestion Collection</a>
+    </aside>
+
+    <main class="main">
+      <h2>Welcome Admin 🎉</h2>
+
+      <div class="card-grid">
+        <div class="card">
+          <h2>12</h2>
+          <p>Total Products</p>
+        </div>
+        <div class="card">
+          <h2>7</h2>
+          <p>Orders Pending</p>
+        </div>
+        <div class="card">
+          <h2>98</h2>
+          <p>Users Registered</p>
+        </div>
+        <div class="card">
+          <h2>₹12,000</h2>
+          <p>Total Sales</p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+</body>
+</html>

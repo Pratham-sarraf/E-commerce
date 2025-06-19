@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact Us | Funky Commerce</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #6c5ce7;
+      --secondary: #00cec9;
+      --accent: #fd79a8;
+      --dark: #2d3436;
+      --light: #f5f6fa;
+      --success-color: #00b894;
+      --error-color: #d63031;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      min-height: 100vh;
+      padding: 2rem;
+      color: var(--dark);
+    }
+
+    .contact-container {
+      max-width: 600px;
+      margin: 2rem auto;
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 20px;
+      padding: 2.5rem;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.3);
+      animation: fadeIn 0.6s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .contact-header {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .contact-title {
+      font-size: 2.2rem;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      margin-bottom: 0.5rem;
+    }
+
+    .contact-subtitle {
+      color: var(--dark);
+      opacity: 0.7;
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 500;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 1rem;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      background: rgba(255, 255, 255, 0.9);
+    }
+
+    textarea {
+      min-height: 150px;
+      resize: vertical;
+    }
+
+    select {
+      appearance: none;
+      background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+      background-repeat: no-repeat;
+      background-position: right 1rem center;
+      background-size: 1em;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 3px rgba(108, 92, 231, 0.2);
+      outline: none;
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 1rem;
+      border: none;
+      border-radius: 10px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      background: linear-gradient(to right, var(--primary), var(--accent));
+      color: white;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+    }
+
+    .btn-submit:hover {
+      background: linear-gradient(to right, var(--accent), var(--primary));
+      box-shadow: 0 8px 15px rgba(108, 92, 231, 0.3);
+      transform: translateY(-2px);
+    }
+
+    .btn-submit:active {
+      transform: translateY(0);
+    }
+
+    .btn-submit:disabled {
+      background: #ccc;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    .floating-bg {
+      position: fixed;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: rgba(253, 121, 168, 0.1);
+      filter: blur(60px);
+      z-index: -1;
+    }
+
+    .bg-1 {
+      top: 20%;
+      left: 10%;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .bg-2 {
+      bottom: 15%;
+      right: 10%;
+      animation: float 10s ease-in-out infinite reverse;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+      100% { transform: translateY(0) rotate(0deg); }
+    }
+
+    .message {
+      opacity: 0;
+      visibility: hidden;
+      max-height: 0;
+      overflow: hidden;
+      transition: opacity 0.4s ease-out, visibility 0s linear 0.4s, max-height 0.4s ease-out;
+      text-align: center;
+      padding: 0 1rem; /* Adjust padding to work with max-height transition */
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.5rem;
+      font-weight: 500;
+    }
+
+    .message.show {
+      opacity: 1;
+      visibility: visible;
+      max-height: 100px; /* Needs to be larger than content height */
+      transition: opacity 0.4s ease-out, visibility 0s linear 0s, max-height 0.4s ease-out;
+      padding-top: 1rem; /* Re-apply padding when shown */
+      padding-bottom: 1rem; /* Re-apply padding when shown */
+    }
+
+    .success-message {
+      background: rgba(0, 184, 148, 0.2);
+      color: var(--dark);
+    }
+
+    .error-message {
+      background: rgba(214, 48, 49, 0.2);
+      color: var(--dark);
+    }
+
+    .message i {
+      font-size: 1.2rem;
+    }
+
+    .success-message i {
+      color: var(--success-color);
+    }
+
+    .error-message i {
+      color: var(--error-color);
+    }
+  </style>
+</head>
+<body>
+  <div class="floating-bg bg-1"></div>
+  <div class="floating-bg bg-2"></div>
+
+  <div class="contact-container">
+    <div class="contact-header">
+      <h1 class="contact-title">Contact Us</h1>
+      <p class="contact-subtitle">We'd love to hear from you!</p>
+    </div>
+
+    <div id="statusMessage" class="message">
+      <i id="statusIcon"></i>
+      <span id="statusText"></span>
+    </div>
+
+    <form id="contactForm" action="/contact-user-page" method="POST">
+      <div class="form-group">
+        <label for="name">Your Name</label>
+        <input type="text" id="name" name="name" placeholder="Enter your name" required>
+      </div>
+
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input type="email" id="email" name="email" placeholder="Enter your email" required>
+      </div>
+
+      <div class="form-group">
+        <label for="subject">Subject</label>
+        <select id="subject" name="subject" required>
+          <option value="" disabled selected>Select a topic</option>
+          <option value="general">General Inquiry</option>
+          <option value="suggestion">Product Suggestion</option>
+          <option value="support">Technical Support</option>
+          <option value="feedback">Feedback</option>
+          <option value="other">Other</option>
+        </select>
+      </div>
+
+      <div class="form-group">
+        <label for="message">Your Message</label>
+        <textarea id="message" name="message" placeholder="Type your message here..." required></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submitButton">
+        <i class="fas fa-paper-plane"></i> Send Message
+      </button>
+    </form>
+  </div>
+
+
+
+</body>
+</html>

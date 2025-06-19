@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Products</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #6c5ce7;
+      --secondary: #00cec9;
+      --accent: #fd79a8;
+      --dark: #2d3436;
+      --light: #f5f6fa;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      min-height: 100vh;
+      padding: 2rem;
+      color: var(--dark);
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 2rem;
+      color: white;
+      font-size: 2.5rem;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      position: relative;
+    }
+
+    h1::after {
+      content: '';
+      display: block;
+      width: 80px;
+      height: 4px;
+      background: linear-gradient(to right, var(--accent), var(--secondary));
+      margin: 0.5rem auto 0;
+      border-radius: 2px;
+    }
+
+    .product-list {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.5rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .product-card {
+      background: rgba(255, 255, 255, 0.95);
+      border-radius: 12px;
+      padding: 1.5rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      transition: all 0.3s ease;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      height: 385px;
+    }
+
+    .product-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .product-card img {
+      width: 100%;
+      height: 220px;
+      object-fit: contain;
+      border-radius: 8px;
+      margin-bottom: 1rem;
+      background-color: #f1f1f1;
+      padding: 8px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .product-name {
+      font-weight: 600;
+      margin-bottom: 0.5rem;
+      color: var(--dark);
+      font-size: 1.1rem;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .product-price {
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 1.2rem;
+    }
+
+    .no-products {
+      text-align: center;
+      color: white;
+      font-size: 1.2rem;
+      grid-column: 1/-1;
+      padding: 2rem;
+      background: rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      backdrop-filter: blur(5px);
+    }
+
+    .floating-bg {
+      position: fixed;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: rgba(253, 121, 168, 0.1);
+      filter: blur(60px);
+      z-index: -1;
+    }
+
+    .bg-1 {
+      top: 20%;
+      left: 10%;
+      animation: float 8s ease-in-out infinite;
+    }
+
+    .bg-2 {
+      bottom: 15%;
+      right: 10%;
+      animation: float 10s ease-in-out infinite reverse;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0) rotate(0deg);
+      }
+
+      50% {
+        transform: translateY(-20px) rotate(5deg);
+      }
+
+      100% {
+        transform: translateY(0) rotate(0deg);
+      }
+    }
+
+    .header-buttons {
+      position: absolute;
+      right: 56px;
+      top: 71px;
+      display: flex;
+      gap: 10px;
+    }
+
+    .login-button,
+    .profile-button,
+    .dropdown-btn {
+      padding: 0.6rem 1.2rem;
+      font-size: 1rem;
+      background-color: var(--primary);
+      /* Start with primary color */
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+      /* Added transform for a subtle pop */
+    }
+
+    .login-button,
+    .profile-button {
+      background: linear-gradient(to right, var(--accent), var(--secondary));
+      /* Apply gradient on hover */
+      transform: scale(1.05);
+      /* Subtle pop effect */
+    }
+
+
+
+    /* Apply specific styling to h3 within these buttons */
+    .login-button h3,
+    .profile-button h3,
+    .dropdown-btn h3 {
+      margin: 0;
+      font-size: 1rem;
+      font-weight: 600;
+    }
+
+    .dropdown {
+      position: relative;
+    }
+
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: white;
+      min-width: 160px;
+      box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+      z-index: 1;
+      border-radius: 5px;
+      top: 120%;
+      right: 0;
+    }
+
+    .dropdown-content a {
+      color: black;
+      padding: 10px 14px;
+      text-decoration: none;
+      display: block;
+    }
+
+    .dropdown-content.show {
+      display: block;
+    }
+
+    .delete-btn {
+      margin-top: 10px;
+      background-color: #ff4d4d;
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .delete-btn:hover {
+      background-color: #e60000;
+    }
+
+    .delete-btn {
+      width: 100%;
+    }
+
+  .pagination {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 30px;
+}
+
+.pagination a,
+.pagination .dots {
+  padding: 8px 14px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  text-decoration: none;
+  color: #333;
+  font-weight: 500;
+  background-color: #f9f9f9;
+  transition: all 0.2s ease;
+}
+
+.pagination a:hover {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.pagination a.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.pagination .pagination-nav-btn {
+  background-color: #f0f0f0;
+  border: 1px solid #ddd;
+  padding: 8px 16px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.pagination .pagination-nav-btn:hover {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.pagination .dots {
+  cursor: default;
+  color: #888;
+}
+
+
+
+
+
+  </style>
+</head>
+
+<body>
+  <div class="floating-bg bg-1"></div>
+  <div class="floating-bg bg-2"></div>
+
+  <h1>Our Products</h1>
+
+  <div class="header-buttons">
+    <% if (!user) { %>
+      <a href="/login">
+        <button class="login-button">
+          <h3>Login</h3>
+        </button>
+      </a>
+      <% } else { %>
+        <% if (user.isAdmin) { %>
+          <a href="/admin">
+            <button class="profile-button">
+              <h3>
+                <%= user.username.toUpperCase() %>
+              </h3>
+            </button>
+          </a>
+          <% } else { %>
+            <a href="/user-profile">
+              <button class="profile-button">
+                <h3>
+                  <%= user.username.toUpperCase() %>
+                </h3>
+              </button>
+            </a>
+            <% } %>
+
+              <% } %>
+
+                <div class="dropdown">
+                  <button class="dropdown-btn">
+                    <h3>Filter</h3>
+                  </button>
+                  <div class="dropdown-content">
+                    <a href="/products?sort=price">Sort by Price</a>
+                    <a href="/products?sort=name">Sort by Name</a>
+                  </div>
+                </div>
+  </div>
+
+<div class="product-list">
+  <% if (products && products.length > 0) { %>
+    <% products.forEach(product => { %>
+      <div class="product-card">
+        <div class="product-card-content">
+          <a href="/products/<%= product._id %>" class="product-card-link" style="text-decoration:none; color:inherit;">
+            <img src="<%= product.url %>" alt="<%= product.name %>" />
+
+            <% if (typeof user !== "undefined" && user.isAdmin) { %>
+              <div class="product-name editable-name" data-id="<%= product._id %>">
+                <span><%= product.name %></span>
+              </div>
+            <% } else { %>
+              <div class="product-name" title="<%= product.name %>"><%= product.name %></div>
+            <% } %>
+
+
+             
+            <div class="product-price">₹<%= Number(product.price).toLocaleString('en-IN') %></div>
+          </a>
+        </div>
+
+        <% if (typeof user !== "undefined" && user.isAdmin) { %>
+          <button class="delete-btn" data-id="<%= product._id %>">Remove</button>
+        <% } %>
+      </div>
+    <% }) %>
+  <% } else { %>
+    <p class="no-products">No products found. <i class="fas fa-box-open"></i></p>
+  <% } %>
+</div>
+
+<div class="pagination">
+  <% if (totalPages > 1) { %>
+
+    <% let limit = 8; %>
+
+    <% if (currentPage > 1) { %>
+      <a href="/products?page=<%= currentPage - 1 %>&limit=<%= limit %><%= sort ? `&sort=${sort}` : '' %>">
+        <button class="pagination-nav-btn">PREV</button>
+      </a>
+    <% } %>
+
+    <% if (currentPage > 3) { %>
+      <a href="/products?page=1&limit=<%= limit %><%= sort ? `&sort=${sort}` : '' %>">1</a>
+      <% if (currentPage > 4) { %>
+        <span class="dots">...</span>
+      <% } %>
+    <% } %>
+
+    <% for (let i = currentPage - 2; i <= currentPage + 2; i++) { 
+          if (i > 0 && i <= totalPages) { %>
+      <a href="/products?page=<%= i %>&limit=<%= limit %><%= sort ? `&sort=${sort}` : '' %>" 
+         class="<%= i === currentPage ? 'active' : '' %>">
+        <%= i %>
+      </a>
+    <% } } %>
+
+    <% if (currentPage < totalPages - 2) { %>
+      <% if (currentPage < totalPages - 3) { %>
+        <span class="dots">...</span>
+      <% } %>
+      <a href="/products?page=<%= totalPages %>&limit=<%= limit %><%= sort ? `&sort=${sort}` : '' %>"><%= totalPages %></a>
+    <% } %>
+
+    <% if (currentPage < totalPages) { %>
+      <a href="/products?page=<%= currentPage + 1 %>&limit=<%= limit %><%= sort ? `&sort=${sort}` : '' %>">
+        <button class="pagination-nav-btn">NEXT</button>
+      </a>
+    <% } %>
+
+  <% } %>
+</div>
+
+
+
+
+
+
+
+
+
+</body>
+
+<!-- DROPDOWN FILTER -->
+<script>
+  // Toggle dropdown on Filter button click
+  document.addEventListener("DOMContentLoaded", () => {
+    const dropdownBtn = document.querySelector(".dropdown-btn");
+    const dropdownContent = document.querySelector(".dropdown-content");
+
+    dropdownBtn.addEventListener("click", (e) => {
+      e.stopPropagation(); // Prevent from bubbling to body
+      dropdownContent.classList.toggle("show");
+    });
+
+    // Hide dropdown when clicking outside
+    document.addEventListener("click", (e) => {
+      if (!dropdownContent.contains(e.target) && !dropdownBtn.contains(e.target)) {
+        dropdownContent.classList.remove("show");
+      }
+    });
+  });
+</script>
+
+<script>
+  document.querySelectorAll(".delete-btn").forEach(button => {
+    button.addEventListener("click", async function (e) {
+      e.preventDefault(); // Prevent default button behavior
+      e.stopPropagation(); // Stop event from bubbling up to parent elements
+
+      const productId = this.dataset.id;
+
+      const confirmDelete = confirm("Are you sure you want to delete this product?");
+      if (!confirmDelete) return;
+
+      try {
+        const response = await fetch(`/products/delete/${productId}`, {
+          method: "DELETE",
+          headers: {
+            "Content-Type": "application/json"
+          }
+        });
+
+        if (response.ok) {
+          window.location.reload(); // Refresh the current page
+        } else {
+          alert("Failed to delete product.");
+        }
+      } catch (err) {
+        console.error("Error:", err);
+        alert("Something went wrong.");
+      }
+    });
+  });
+</script>
+
+
+
+
+</html>

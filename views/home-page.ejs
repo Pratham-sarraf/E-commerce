@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Funky Commerce | Home</title>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Righteous&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  <style>
+    :root {
+      --primary: #6c5ce7;
+      --secondary: #00cec9;
+      --accent: #fd79a8;
+      --dark: #2d3436;
+      --light: #f5f6fa;
+      --success: #00b894;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      min-height: 100vh;
+    }
+    
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 2rem;
+    }
+    
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 3rem;
+      padding: 1rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2);
+    }
+    
+    .logo {
+      font-family: 'Righteous', cursive;
+      font-size: 2.5rem;
+      background: linear-gradient(to right, var(--accent), #fff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+    
+    nav ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+    
+    nav a {
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: all 0.3s ease;
+    }
+    
+    nav a:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+    
+    .hero {
+      text-align: center;
+      margin-bottom: 4rem;
+      padding: 4rem 0;
+    }
+    
+    .hero h1 {
+      font-size: 3.5rem;
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+    
+    .hero p {
+      font-size: 1.2rem;
+      max-width: 700px;
+      margin: 0 auto 2rem;
+      opacity: 0.9;
+    }
+    
+    .btn {
+      display: inline-block;
+      padding: 1rem 2rem;
+      background: var(--accent);
+      color: white;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 1.1rem;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(253, 121, 168, 0.3);
+    }
+    
+    .btn:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 8px 25px rgba(253, 121, 168, 0.4);
+    }
+    
+    .featured {
+      margin-bottom: 4rem;
+    }
+    
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      position: relative;
+      display: inline-block;
+    }
+    
+    .section-title::after {
+      content: '';
+      position: absolute;
+      bottom: -10px;
+      left: 0;
+      width: 50%;
+      height: 4px;
+      background: linear-gradient(to right, var(--accent), var(--secondary));
+      border-radius: 2px;
+    }
+    
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 2rem;
+    }
+    
+    .product-card {
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      overflow: hidden;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+    
+    .product-card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
+    }
+    
+    .product-image {
+      width: 100%;
+      height: 200px;
+      object-fit: cover;
+    }
+    
+    .product-info {
+      padding: 1.5rem;
+    }
+    
+    .product-name {
+      font-size: 1.2rem;
+      margin-bottom: 0.5rem;
+    }
+    
+    .product-price {
+      font-weight: 700;
+      color: var(--accent);
+      font-size: 1.3rem;
+    }
+    
+    .floating-bg {
+      position: fixed;
+      width: 300px;
+      height: 300px;
+      border-radius: 50%;
+      background: rgba(253, 121, 168, 0.1);
+      filter: blur(60px);
+      z-index: -1;
+    }
+    
+    .bg-1 {
+      top: 20%;
+      left: 10%;
+      animation: float 8s ease-in-out infinite;
+    }
+    
+    .bg-2 {
+      bottom: 15%;
+      right: 10%;
+      animation: float 10s ease-in-out infinite reverse;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0) rotate(0deg); }
+      50% { transform: translateY(-20px) rotate(5deg); }
+      100% { transform: translateY(0) rotate(0deg); }
+    }
+    
+    footer {
+      text-align: center;
+      padding: 2rem;
+      margin-top: 4rem;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 15px;
+      backdrop-filter: blur(10px);
+    }
+    
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 1.5rem;
+      margin: 1rem 0;
+    }
+    
+    .social-links a {
+      color: white;
+      font-size: 1.5rem;
+      transition: all 0.3s ease;
+    }
+    
+    .social-links a:hover {
+      color: var(--accent);
+      transform: translateY(-3px);
+    }
+  </style>
+</head>
+<body>
+  <!-- Floating background elements -->
+  <div class="floating-bg bg-1"></div>
+  <div class="floating-bg bg-2"></div>
+
+  <div class="container">
+    <header>
+      <div class="logo">Funky Commerce</div>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/products">Shop</a></li>
+          <li><a href="/register">Creat Account</a></li>
+          <li><a href="/contact-user-page">Contact</a></li>
+          <li><a href="/admin">Admin</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <section class="hero">
+      <h1>Welcome to the Funkiest Shopping Experience</h1>
+      <p>Discover amazing products at unbeatable prices. Our curated collection is designed to bring joy to your everyday life.</p>
+      <a href="/products" class="btn">Shop Now</a>
+    </section>
+
+    <section class="featured">
+      <h2 class="section-title">Featured Products</h2>
+      <div class="products-grid">
+        <div class="product-card">
+          <img src="https://via.placeholder.com/300x200?text=Premium+Headphones" alt="Premium Headphones" class="product-image" />
+          <div class="product-info">
+            <h3 class="product-name">Premium Wireless Headphones</h3>
+            <div class="product-price">₹3,999</div>
+          </div>
+        </div>
+        
+        <div class="product-card">
+          <img src="https://via.placeholder.com/300x200?text=Smart+Watch" alt="Smart Watch" class="product-image" />
+          <div class="product-info">
+            <h3 class="product-name">Smart Watch Pro</h3>
+            <div class="product-price">₹6,499</div>
+          </div>
+        </div>
+        
+        <div class="product-card">
+          <img src="https://via.placeholder.com/300x200?text=Wireless+Speaker" alt="Wireless Speaker" class="product-image" />
+          <div class="product-info">
+            <h3 class="product-name">Portable Bluetooth Speaker</h3>
+            <div class="product-price">₹2,299</div>
+          </div>
+        </div>
+        
+        <div class="product-card">
+          <img src="https://via.placeholder.com/300x200?text=Gaming+Keyboard" alt="Gaming Keyboard" class="product-image" />
+          <div class="product-info">
+            <h3 class="product-name">RGB Gaming Keyboard</h3>
+            <div class="product-price">₹4,599</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="categories">
+      <h2 class="section-title">Shop by Category</h2>
+      <div class="products-grid">
+        <div class="product-card">
+          <img src="https://via.placeholder.com/300x200?text=Electronics" alt="Electronics" class="product-image" />
+          <div class="product-info">
+            <h3 class="product-name">Electronics</h3>
+          </div>
+        </div>
+        
+        <div class="product-card">
+          <img src="https://via.placeholder.com/300x200?text=Fashion" alt="Fashion" class="product-image" />
+          <div class="product-info">
+            <h3 class="product-name">Fashion</h3>
+          </div>
+        </div>
+        
+        <div class="product-card">
+          <img src="https://via.placeholder.com/300x200?text=Home+Decor" alt="Home Decor" class="product-image" />
+          <div class="product-info">
+            <h3 class="product-name">Home & Decor</h3>
+          </div>
+        </div>
+        
+        <div class="product-card">
+          <img src="https://via.placeholder.com/300x200?text=Accessories" alt="Accessories" class="product-image" />
+          <div class="product-info">
+            <h3 class="product-name">Accessories</h3>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <footer>
+    <div class="social-links">
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-pinterest"></i></a>
+    </div>
+    <p>&copy; 2023 Funky Commerce. All rights reserved.</p>
+  </footer>
+</body>
+</html> 
